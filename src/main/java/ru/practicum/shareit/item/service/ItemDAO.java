@@ -1,5 +1,7 @@
 package ru.practicum.shareit.item.service;
 
+import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
@@ -8,10 +10,10 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.service.userDAO;
 
-import java.nio.file.AccessDeniedException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 public class ItemDAO {
 
@@ -28,28 +30,30 @@ public class ItemDAO {
 
 
     public Item postItem(long userId, ItemDto itemDto) {
+        log.info("Запрос на создание вещи");
         validateItemDto(itemDto);
         User user = userDao.getUserById(userId);
         Item item = ItemMapper.toItem(itemDto,userId);
         item.setOwner(user.getId());
         item.setId(generateId());
         items.put(item.getId(),item);
+        log.info("Запрос на создание вещи выполнен");
 
         return item;
     }
 
     private void validateItemDto(ItemDto dto) {
         if (dto == null) {
-            throw new IllegalArgumentException("ItemDTO не может быть null");
+            throw new ValidationException("ItemDTO не может быть null");
         }
         if (dto.getName() == null || dto.getName().isBlank()) {
-            throw new IllegalArgumentException("Название вещи не может быть пустым");
+            throw new ValidationException("Название вещи не может быть пустым");
         }
         if (dto.getDescription() == null || dto.getDescription().isBlank()) {
-            throw new IllegalArgumentException("Описание вещи не может быть пустым");
+            throw new ValidationException("Описание вещи не может быть пустым");
         }
         if (dto.getAvailable() == null) {
-            throw new IllegalArgumentException("Статус доступности должен быть указан");
+            throw new ValidationException("Статус доступности должен быть указан");
         }
     }
 
@@ -58,11 +62,12 @@ public class ItemDAO {
     }
 
     public Item updateItem(ItemDto itemDto, long itemId, long ownerId) {
+        log.info("Запрос на обновление данных вещи");
         Item itemToUpdate = getItemById(itemId);
 
 
         if (itemToUpdate.getOwner() != ownerId) {
-            throw new NotFoundException("Только владелец может обновлять вешь");
+            throw new ValidationException("Только владелец может обновлять вешь");
         }
 
         if (itemDto.getName() != null && !itemDto.getName().isBlank()) {
@@ -78,6 +83,8 @@ public class ItemDAO {
         }
 
         items.put(itemId,itemToUpdate);
+
+        log.info("Запрос выполнен");
 
 
         return itemToUpdate;

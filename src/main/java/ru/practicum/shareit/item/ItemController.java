@@ -1,13 +1,10 @@
 package ru.practicum.shareit.item;
 
-import jakarta.websocket.server.PathParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemDAO;
 
-import java.nio.file.AccessDeniedException;
 import java.util.Collection;
 import java.util.List;
 

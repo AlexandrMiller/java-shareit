@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDTO;
 import ru.practicum.shareit.user.service.userDAO;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * TODO Sprint add-controllers.
  */
