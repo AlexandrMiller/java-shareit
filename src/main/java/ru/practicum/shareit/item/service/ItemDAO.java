@@ -67,7 +67,7 @@ public class ItemDAO {
 
 
         if (itemToUpdate.getOwner() != ownerId) {
-            throw new ValidationException("Только владелец может обновлять вешь");
+            throw new NotFoundException("У данного пользовталея нет такой вещи");
         }
 
         if (itemDto.getName() != null && !itemDto.getName().isBlank()) {
