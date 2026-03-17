@@ -3,8 +3,8 @@ package ru.practicum.shareit.user;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.user.dto.UserDTO;
-import ru.practicum.shareit.user.service.userDAO;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.service.userDao;
 
 /**
  * TODO Sprint add-controllers.
@@ -14,9 +14,9 @@ import ru.practicum.shareit.user.service.userDAO;
 @RequestMapping(path = "/users")
 public class UserController {
 
-    private final userDAO userDao;
+    private final userDao userDao;
 
-    public UserController(userDAO userDao) {
+    public UserController(userDao userDao) {
         this.userDao = userDao;
     }
 
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public User updateUser(@PathVariable long id, @RequestBody UserDTO dto) {
+    public User updateUser(@PathVariable long id, @RequestBody UserDto dto) {
         return userDao.updateUser(dto, id);
     }
 }

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
 import ru.practicum.shareit.user.User;
-import ru.practicum.shareit.user.dto.UserDTO;
+import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.*;
 
 @Slf4j
 @Repository
-public class userDAO {
+public class userDao {
 
     Map<Long, User> users = new HashMap<>();
 
@@ -76,7 +76,7 @@ public class userDAO {
         }
     }
 
-    public User updateUser(UserDTO dto,long userId) {
+    public User updateUser(UserDto dto, long userId) {
 
         User user = getUserById(userId);
 
