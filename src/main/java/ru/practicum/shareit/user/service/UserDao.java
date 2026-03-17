@@ -11,7 +11,7 @@ import java.util.*;
 
 @Slf4j
 @Repository
-public class userDao {
+public class UserDao {
 
     Map<Long, User> users = new HashMap<>();
 

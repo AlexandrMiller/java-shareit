@@ -8,7 +8,7 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
-import ru.practicum.shareit.user.service.userDao;
+import ru.practicum.shareit.user.service.UserDao;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 public class ItemDAO {
 
 
-    private final userDao userDao;
+    private final UserDao userDao;
 
     Map<Long,Item> items = new HashMap<>();
 
     private long itemId = 0;
 
-    public ItemDAO(userDao userDao) {
+    public ItemDAO(UserDao userDao) {
         this.userDao = userDao;
     }
 

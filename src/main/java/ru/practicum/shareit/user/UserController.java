@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.service.userDao;
+import ru.practicum.shareit.user.service.UserDao;
 
 /**
  * TODO Sprint add-controllers.
@@ -14,9 +14,9 @@ import ru.practicum.shareit.user.service.userDao;
 @RequestMapping(path = "/users")
 public class UserController {
 
-    private final userDao userDao;
+    private final UserDao userDao;
 
-    public UserController(userDao userDao) {
+    public UserController(UserDao userDao) {
         this.userDao = userDao;
     }
 
