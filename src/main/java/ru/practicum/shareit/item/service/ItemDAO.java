@@ -20,7 +20,7 @@ public class ItemDAO {
 
     private final UserDao userDao;
 
-    Map<Long,Item> items = new HashMap<>();
+    private final Map<Long,Item> items = new HashMap<>();
 
     private long itemId = 0;
 

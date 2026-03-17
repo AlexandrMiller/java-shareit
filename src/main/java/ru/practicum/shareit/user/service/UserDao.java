@@ -13,7 +13,7 @@ import java.util.*;
 @Repository
 public class UserDao {
 
-    Map<Long, User> users = new HashMap<>();
+    private final Map<Long, User> users = new HashMap<>();
 
     private long userId = 0;
 
