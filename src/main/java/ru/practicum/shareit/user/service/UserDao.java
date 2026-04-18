@@ -1,64 +1,58 @@
 package ru.practicum.shareit.user.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.exceptions.NotFoundException;
 import ru.practicum.shareit.exceptions.ValidationException;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.jpaUser.UserRepository;
 import ru.practicum.shareit.user.dto.UserDto;
 
-import java.util.*;
-
 @Slf4j
-@Repository
-public class UserDao {
+@Service
+public class UserDao implements UserInterface {
 
-    private final Map<Long, User> users = new HashMap<>();
+    private final UserRepository userRepository;
 
-    private long userId = 0;
+    public UserDao(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 
     public User getUserById(Long id) {
 
-        if (!users.containsKey(id)) {
-            throw new NotFoundException("Такого пользователя не существует");
-        }
-        return users.get(id);
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
     }
 
 
+    @Transactional
     public User createUser(User user) {
         log.info("Запрос на создание пользователя");
         validateUserDto(user);
         checkEmail(user.getEmail());
-        user.setId(getNextId());
-        users.put(user.getId(),user);
+        userRepository.save(user);
         log.info("Запрос выполнен");
         return user;
     }
 
-
-    public long getNextId() {
-        return ++userId;
-    }
-
-
     public void checkEmail(String email) {
 
-        boolean exists = users.values().stream()
-                .anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
+        boolean exists = userRepository.existsByEmailIgnoreCase(email);
 
         if (exists) {
             throw new ValidationException("Пользователь с таким email уже существует");
         }
     }
 
+    @Transactional(readOnly = true)
     public void deleteUser(long id) {
 
-        if (!users.containsKey(id)) {
-            throw new NotFoundException("Пользователь с ID " + id + " не найден");
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException("Такого пользователья не существует");
         }
-        users.remove(id);
+        userRepository.deleteById(id);
+        log.info("User deleted");
     }
 
     public void validateUserDto(User user) {
@@ -76,6 +70,7 @@ public class UserDao {
         }
     }
 
+    @Transactional
     public User updateUser(UserDto dto, long userId) {
 
         User user = getUserById(userId);
@@ -89,11 +84,14 @@ public class UserDao {
         }
 
         if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
-            checkEmail(dto.getEmail());
-            user.setEmail(dto.getEmail());
+
+            if (!dto.getEmail().equalsIgnoreCase(user.getEmail())) {
+                checkEmail(dto.getEmail());
+                user.setEmail(dto.getEmail());
+            }
         }
 
-        users.put(user.getId(),user);
+        userRepository.save(user);
 
         return user;
     }
