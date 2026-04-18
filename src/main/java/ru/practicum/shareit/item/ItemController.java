@@ -20,7 +20,7 @@ public class ItemController {
 
     private final ItemDAO itemDao;
 
-    private final String HEADER = "X-Sharer-User-Id";
+    private static final String HEADER = "X-Sharer-User-Id";
 
     public ItemController(ItemDAO itemDao) {
         this.itemDao = itemDao;
