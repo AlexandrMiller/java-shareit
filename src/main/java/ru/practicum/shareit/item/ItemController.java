@@ -20,30 +20,32 @@ public class ItemController {
 
     private final ItemDAO itemDao;
 
+    private final String HEADER = "X-Sharer-User-Id";
+
     public ItemController(ItemDAO itemDao) {
         this.itemDao = itemDao;
     }
 
     @PostMapping
-    public Item postItem(@RequestBody ItemDto dto, @RequestHeader("X-Sharer-User-Id") long userId) {
+    public Item postItem(@RequestBody ItemDto dto, @RequestHeader(HEADER) long userId) {
 
       return itemDao.postItem(userId,dto);
     }
 
     @PatchMapping("/{itemId}")
     public Item updateItem(@RequestBody ItemDto dto,
-                           @RequestHeader("X-Sharer-User-Id") Long ownerId,
+                           @RequestHeader(HEADER) Long ownerId,
                            @PathVariable Long itemId) {
         return itemDao.updateItem(dto, itemId, ownerId);
     }
 
     @GetMapping("/{itemId}")
-    public ItemLastNextDto getItemById(@PathVariable Long itemId, @RequestHeader("X-Sharer-User-Id") Long id) {
+    public ItemLastNextDto getItemById(@PathVariable Long itemId, @RequestHeader(HEADER) Long id) {
         return itemDao.getItemById(itemId,id);
     }
 
     @GetMapping
-    public List<ItemLastNextDto> getItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long id) {
+    public List<ItemLastNextDto> getItemsByOwner(@RequestHeader(HEADER) Long id) {
         return itemDao.getItemsByOwner(id);
     }
 
@@ -54,7 +56,7 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     public CommentDto createComment(@RequestBody CommentDto commentDto,
-                                    @RequestHeader("X-Sharer-User-Id") Long userId,
+                                    @RequestHeader(HEADER) Long userId,
                                     @PathVariable Long itemId) {
         return itemDao.createComment(commentDto,itemId,userId);
     }
