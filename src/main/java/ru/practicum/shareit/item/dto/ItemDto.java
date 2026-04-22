@@ -17,5 +17,7 @@ public class ItemDto {
 
     private Boolean available;
 
+    private Long requestId;
+
 
 }

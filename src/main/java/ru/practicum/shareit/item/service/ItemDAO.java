@@ -54,6 +54,11 @@ public class ItemDAO implements ItemInterface {
         validateItemDto(itemDto);
         User user = userDao.getUserById(userId);
         Item item = ItemMapper.toItem(itemDto,user);
+        if (itemDto.getRequestId() == null) {
+            item.setRequestId(null);
+        } else {
+            item.setRequestId(itemDto.getRequestId());
+        }
         Item savedItem = itemRepository.save(item);
         log.info("Запрос на создание вещи выполнен");
 

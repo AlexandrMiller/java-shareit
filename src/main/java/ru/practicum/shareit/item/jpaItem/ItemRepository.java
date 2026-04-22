@@ -18,5 +18,7 @@ public interface ItemRepository extends JpaRepository<Item,Long> {
 
     boolean existsItemsByOwnerId(Long userId);
 
+    List<Item> findItemsByRequestId(Long requestId);
+
 
 }
