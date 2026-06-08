@@ -35,8 +35,6 @@ public class UserUnitTest {
         user = new User(1L, "Иван", "ivan@mail.ru");
     }
 
-    // --- getUserById ---
-
     @Test
     void getUserById_whenExists_returnsUser() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -55,7 +53,6 @@ public class UserUnitTest {
         assertThrows(NotFoundException.class, () -> userDao.getUserById(99L));
     }
 
-    // --- createUser ---
 
     @Test
     void createUser_whenValid_savesAndReturnsUser() {
@@ -97,8 +94,6 @@ public class UserUnitTest {
         assertThrows(ValidationException.class, () -> userDao.createUser(null));
     }
 
-    // --- deleteUser ---
-
     @Test
     void deleteUser_whenExists_deletesUser() {
         when(userRepository.existsById(1L)).thenReturn(true);
@@ -115,8 +110,6 @@ public class UserUnitTest {
         assertThrows(NotFoundException.class, () -> userDao.deleteUser(99L));
         verify(userRepository, never()).deleteById(any());
     }
-
-    // --- updateUser ---
 
     @Test
     void updateUser_whenNewName_updatesName() {
