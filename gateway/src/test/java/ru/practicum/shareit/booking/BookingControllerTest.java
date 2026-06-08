@@ -35,8 +35,6 @@ public class BookingControllerTest {
 
     private static final String HEADER = "X-Sharer-User-Id";
 
-    // --- POST /bookings ---
-
     @Test
     void bookItem_whenValid_returns200() throws Exception {
         BookingShortDto dto = new BookingShortDto();
@@ -96,8 +94,6 @@ public class BookingControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    // --- GET /bookings/{bookingId} ---
-
     @Test
     void getBooking_returns200() throws Exception {
         when(bookingClient.getBooking(eq(1L), eq(2L))).thenReturn(ResponseEntity.ok().build());
@@ -108,8 +104,6 @@ public class BookingControllerTest {
 
         verify(bookingClient).getBooking(eq(1L), eq(2L));
     }
-
-    // --- PATCH /bookings/{bookingId} ---
 
     @Test
     void approveBooking_returns200() throws Exception {
@@ -122,8 +116,6 @@ public class BookingControllerTest {
 
         verify(bookingClient).approveBooking(eq(1L), eq(2L), eq(true));
     }
-
-    // --- GET /bookings ---
 
     @Test
     void getBookings_withDefaultState_returns200() throws Exception {
@@ -143,8 +135,6 @@ public class BookingControllerTest {
                         .param("state", "UNKNOWN_STATE"))
                 .andExpect(status().isBadRequest());
     }
-
-    // --- GET /bookings/owner ---
 
     @Test
     void getOwnerBookings_withDefaultState_returns200() throws Exception {
