@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.user.client.UserClient;
+import ru.practicum.shareit.user.controller.UserController;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -29,8 +30,6 @@ public class UserControllerTest {
 
     @MockBean
     private UserClient userClient;
-
-    // --- POST /users ---
 
     @Test
     void createUser_whenValid_returns200() throws Exception {
@@ -75,8 +74,6 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    // --- GET /users/{id} ---
-
     @Test
     void getUserById_returns200() throws Exception {
         when(userClient.getUserById(1L)).thenReturn(ResponseEntity.ok().build());
@@ -87,8 +84,6 @@ public class UserControllerTest {
         verify(userClient).getUserById(1L);
     }
 
-    // --- DELETE /users/{id} ---
-
     @Test
     void deleteUser_returns200() throws Exception {
         when(userClient.deleteUser(1L)).thenReturn(ResponseEntity.ok().build());
@@ -98,8 +93,6 @@ public class UserControllerTest {
 
         verify(userClient).deleteUser(1L);
     }
-
-    // --- PATCH /users/{id} ---
 
     @Test
     void updateUser_returns200() throws Exception {

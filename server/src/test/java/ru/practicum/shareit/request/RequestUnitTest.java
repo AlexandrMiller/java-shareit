@@ -49,8 +49,6 @@ public class RequestUnitTest {
         itemRequestDto = new ItemRequestDto(1L, "Нужна дрель", itemRequest.getCreated(), List.of());
     }
 
-    // --- createRequest ---
-
     @Test
     void createRequest_whenUserExists_savesAndReturnsRequest() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -71,8 +69,6 @@ public class RequestUnitTest {
                 () -> requestDao.createRequest(new ItemRequestDto(null, "текст", null, null), 99L));
         verify(requestRepository, never()).save(any());
     }
-
-    // --- getItemRequestsByRequestorId ---
 
     @Test
     void getItemRequestsByRequestorId_whenUserExists_returnsDtoList() {
@@ -105,8 +101,6 @@ public class RequestUnitTest {
         assertTrue(result.isEmpty());
     }
 
-    // --- getAllRequests ---
-
     @Test
     void getAllRequests_returnsOtherUsersRequests() {
         User other = new User(2L, "Другой", "other@mail.ru");
@@ -130,8 +124,6 @@ public class RequestUnitTest {
         assertThrows(NotFoundException.class, () -> requestDao.getAllRequests(99L));
         verify(requestRepository, never()).findAllByRequestorIdNotOrderByCreatedDesc(any());
     }
-
-    // --- getRequestById ---
 
     @Test
     void getRequestById_whenExists_returnsDto() {

@@ -25,8 +25,6 @@ public class DtoJsonTest {
     @Autowired
     private JacksonTester<CommentDto> commentDtoTester;
 
-    // --- BookingDto ---
-
     @Test
     void bookingDto_serializeDates_correctFormat() throws Exception {
         BookingDto dto = new BookingDto(
@@ -66,8 +64,6 @@ public class DtoJsonTest {
         assertThat(result.getStatus()).isEqualTo(Status.WAITING);
     }
 
-    // --- BookingShortDto ---
-
     @Test
     void bookingShortDto_serializeDates_correctFormat() throws Exception {
         BookingShortDto dto = new BookingShortDto(
@@ -102,8 +98,6 @@ public class DtoJsonTest {
         assertThat(result.getStart()).isEqualTo(LocalDateTime.of(2025, 7, 15, 9, 0, 0));
         assertThat(result.getEnd()).isEqualTo(LocalDateTime.of(2025, 7, 16, 18, 0, 0));
     }
-
-    // --- CommentDto ---
 
     @Test
     void commentDto_serializeCreated_correctFormat() throws Exception {

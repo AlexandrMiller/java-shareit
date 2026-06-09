@@ -8,6 +8,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.shareit.request.client.RequestClient;
+import ru.practicum.shareit.request.controller.RequestController;
+import ru.practicum.shareit.request.dto.RequestDto;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -29,8 +32,6 @@ public class RequestControllerTest {
     private RequestClient requestClient;
 
     private static final String HEADER = "X-Sharer-User-Id";
-
-    // --- POST /requests ---
 
     @Test
     void createRequest_whenValid_returns200() throws Exception {
@@ -78,8 +79,6 @@ public class RequestControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    // --- GET /requests ---
-
     @Test
     void getMyRequests_returns200() throws Exception {
         when(requestClient.getMyRequests(eq(1L))).thenReturn(ResponseEntity.ok().build());
@@ -97,8 +96,6 @@ public class RequestControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    // --- GET /requests/all ---
-
     @Test
     void getAllRequests_returns200() throws Exception {
         when(requestClient.getAllRequests(eq(1L))).thenReturn(ResponseEntity.ok().build());
@@ -109,8 +106,6 @@ public class RequestControllerTest {
 
         verify(requestClient).getAllRequests(eq(1L));
     }
-
-    // --- GET /requests/{requestId} ---
 
     @Test
     void getRequestById_returns200() throws Exception {

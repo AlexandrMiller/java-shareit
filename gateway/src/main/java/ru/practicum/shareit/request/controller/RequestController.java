@@ -1,4 +1,4 @@
-package ru.practicum.shareit.request;
+package ru.practicum.shareit.request.controller;
 
 
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.item.dto.ItemForReqDto;
+import ru.practicum.shareit.request.client.RequestClient;
+import ru.practicum.shareit.request.dto.RequestDto;
 
 @Controller
 @RequestMapping(path = "/requests")
